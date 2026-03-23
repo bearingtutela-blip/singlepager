@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bearing Tutela — Fractional Practices</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap" rel="stylesheet">
+<!-- Calendly CSS for the overlay -->
+<link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --ink:#1c1b18;--ink-2:#403e38;--ink-3:#7e7c74;--ink-4:#b2b0a6;--ink-5:#d0cec4;
+  --rule:#e6e3d9;--rule-2:#eeebe3;--bg:#f6f4ef;--bg-2:#efece5;--bg-3:#e7e3d9;
+  --warm-dk:#2a2720;--warm-md:#3d3a31;--cream:#faf8f4;
+  --serif:'Lora', serif;
+  --body:'Plus Jakarta Sans', sans-serif;
+}
+html{font-size:16px;scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-weight:400;line-height:1.6;-webkit-font-smoothing:antialiased}
+
+/* Navigation */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1.5rem 3rem;background:rgba(246,244,239,.95);backdrop-filter:blur(14px);border-bottom:1px solid var(--rule)}
+.logo{display:flex;align-items:center;gap:1rem;text-decoration:none}
+.logo-mark{width:46px;height:46px;background:var(--warm-dk);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.logo-mark svg{width:22px;height:22px}
+.logo-text{display:flex;flex-direction:column;gap:1px}
+.logo-name{font-family:var(--serif);font-size:1.4rem;font-weight:700;color:var(--ink);letter-spacing:-.01em;line-height:1}
+.logo-tag{font-size:.6rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-4);font-family:var(--body)}
+.nav-links{display:flex;align-items:center;gap:.5rem}
+.nav-links a{font-family:var(--body);font-size:.9rem;font-weight:600;color:var(--ink-3);text-decoration:none;padding:.5rem 1rem;border-radius:6px;transition:all .15s}
+.nav-links a:hover{color:var(--ink);background:var(--bg-2)}
+.nav-links a.nav-cta{background:var(--warm-dk);color:var(--bg);margin-left:.75rem;padding:.65rem 1.5rem;font-weight:700;cursor:pointer}
+
+/* Hero */
+#hero{min-height:100vh;padding:10rem 3rem 6rem;max-width:1280px;margin:0 auto;display:flex;flex-direction:column;justify-content:center}
+.hero-label-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:3rem;opacity:0;animation:fadeUp .5s ease .1s forwards}
+.hero-badge{display:inline-flex;align-items:center;gap:.5rem;font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);background:var(--cream);border:1px solid var(--rule);padding:.45rem 1rem;border-radius:100px}
+.badge-pip{width:5px;height:5px;border-radius:50%;background:var(--ink-4)}
+.avail-tag{display:flex;align-items:center;gap:.5rem;font-size:.7rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-4)}
+.avail-dot{width:7px;height:7px;border-radius:50%;background:#5cb87a;animation:softpulse 2.5s ease-in-out infinite}
+@keyframes softpulse{0%,100%{box-shadow:0 0 0 0 rgba(92,184,122,.4)}50%{box-shadow:0 0 0 5px rgba(92,184,122,.08)}}
+
+h1{font-family:var(--serif);font-size:clamp(3rem,6vw,5.5rem);font-weight:600;line-height:1.1;letter-spacing:-.02em;color:var(--ink);margin-bottom:3.5rem;opacity:0;animation:fadeUp .65s ease .2s forwards}
+h1 span.soft{color:var(--ink-4);font-weight:400;font-style:italic}
+.hero-lower{display:grid;grid-template-columns:1.2fr 1fr;gap:4rem;align-items:end;opacity:0;animation:fadeUp .65s ease .38s forwards}
+.hero-sub{font-size:1.15rem;color:var(--ink-2);line-height:1.7;max-width:50ch}
+.hero-actions{display:flex;flex-direction:column;align-items:flex-end;gap:1.25rem}
+
+.btn-primary{display:inline-flex;align-items:center;gap:.75rem;background:var(--warm-dk);color:var(--cream);font-family:var(--body);font-size:.95rem;font-weight:700;padding:1.125rem 2rem;border-radius:8px;text-decoration:none;transition:all .18s;white-space:nowrap;cursor:pointer}
+.btn-primary:hover{background:var(--warm-md);transform:translateY(-1px)}
+.btn-primary svg{width:14px;height:14px;transition:transform .18s}
+.btn-primary:hover svg{transform:translateX(4px)}
+.hero-footnote{font-size:.75rem;color:var(--ink-4);text-align:right;line-height:1.75}
+
+/* Ticker */
+.ticker{background:var(--warm-dk);overflow:hidden;padding:1.25rem 0;border-top:1px solid rgba(250,248,244,.1)}
+.ticker-track{display:flex;gap:3rem;animation:tickermove 40s linear infinite;width:max-content}
+.ticker-item{display:flex;align-items:center;gap:3rem;font-family:var(--body);font-size:.8rem;font-weight:700;color:rgba(250,248,244,.25);white-space:nowrap;letter-spacing:.08em;text-transform:uppercase}
+.ticker-dot{width:4px;height:4px;border-radius:50%;background:rgba(250,248,244,.15);flex-shrink:0}
+@keyframes tickermove{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* Stats Bar */
+.stats-bar{background:var(--bg-3);border-bottom:1px solid var(--rule);padding:4rem 3rem}
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2rem}
+.stat-item{text-align:center}
+.stat-val{font-family:var(--serif);font-size:2.5rem;font-weight:600;color:var(--ink);display:block;line-height:1}
+.stat-lab{font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);margin-top:1rem;display:block}
+
+/* Sections General */
+section{padding:8rem 3rem}
+.inner{max-width:1280px;margin:0 auto}
+.eyebrow{font-size:.65rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-4);margin-bottom:1.5rem;display:flex;align-items:center;gap:.75rem}
+.eyebrow::before{content:'';display:block;width:24px;height:1px;background:var(--ink-5)}
+h2{font-family:var(--serif);font-weight:600;font-size:clamp(2.25rem,4vw,3.5rem);letter-spacing:-.01em;line-height:1.2;color:var(--ink)}
+
+/* Expertise / Scenarios */
+#expertise{background:var(--cream);border-bottom:1px solid var(--rule)}
+.exp-head{display:grid;grid-template-columns:1.2fr 1fr;gap:6rem;margin-bottom:5.5rem;align-items:end}
+.exp-intro{font-size:1.125rem;color:var(--ink-2);line-height:1.75}
+.exp-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+.exp-card{background:var(--bg);border:1px solid var(--rule);border-radius:12px;padding:2.75rem;transition:all .25s}
+.exp-card:hover{background:#fff;transform:translateY(-4px);box-shadow:0 12px 40px rgba(28,27,24,.06)}
+.exp-n{font-family:var(--serif);font-size:1.125rem;font-weight:600;font-style:italic;color:var(--ink-4);margin-bottom:2rem}
+.exp-title{font-family:var(--serif);font-size:1.5rem;font-weight:600;color:var(--ink);margin-bottom:1rem}
+.exp-desc{font-size:.95rem;color:var(--ink-3);line-height:1.75}
+
+/* Method */
+#how{background:var(--warm-dk);color:var(--cream)}
+#how .eyebrow{color:rgba(250,248,244,.35)}
+#how .eyebrow::before{background:rgba(250,248,244,.25)}
+#how h2{color:var(--cream);margin-bottom:5rem}
+.how-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(250,248,244,.08)}
+.how-cell{background:var(--warm-dk);padding:3.5rem 2.5rem;transition:all .2s}
+.how-cell:hover{background:var(--warm-md)}
+.how-num{font-family:var(--serif);font-size:3rem;font-weight:400;font-style:italic;color:rgba(250,248,244,.1);line-height:1;margin-bottom:2rem}
+.how-title{font-family:var(--serif);font-size:1.25rem;font-weight:600;color:var(--cream);margin-bottom:.875rem}
+.how-desc{font-size:.9rem;color:rgba(250,248,244,.4);line-height:1.7}
+
+/* Pricing */
+#pricing{background:var(--bg-2)}
+.price-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:4rem}
+.price-card{background:var(--cream);border:1px solid var(--rule);border-radius:12px;padding:3.5rem 2.5rem;transition:all .2s}
+.price-card.featured{background:var(--warm-dk);border-color:var(--warm-dk);color:var(--cream)}
+.price-card.featured:hover{background:var(--warm-md)}
+.p-tier{font-size:.65rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-4);margin-bottom:2rem}
+.price-card.featured .p-tier{color:rgba(250,248,244,.3)}
+.p-name{font-family:var(--serif);font-size:1.75rem;font-weight:600;margin-bottom:1.5rem}
+.p-num{font-family:var(--serif);font-size:2.25rem;font-weight:600;line-height:1.2;margin-bottom:.5rem}
+.p-freq{font-size:.8125rem;color:var(--ink-4);margin-bottom:2.5rem}
+.price-card.featured .p-freq{color:rgba(250,248,244,.3)}
+.p-list{list-style:none;border-top:1px solid var(--rule);padding-top:2rem}
+.price-card.featured .p-list{border-color:rgba(250,248,244,.1)}
+.p-list li{font-size:.95rem;color:var(--ink-2);padding:.625rem 0;display:flex;gap:1rem;align-items:flex-start}
+.price-card.featured .p-list li{color:rgba(250,248,244,.55)}
+.p-list li::before{content:'';width:16px;height:1px;background:var(--ink-5);margin-top:.75rem;flex-shrink:0}
+.price-card.featured .p-list li::before{background:rgba(250,248,244,.2)}
+
+/* About & CTA */
+#about{display:grid;grid-template-columns:1fr 440px;gap:6rem;align-items:start}
+.about-text p{font-size:1.1rem;color:var(--ink-2);line-height:1.8;margin-bottom:1.5rem}
+.cta-card{background:var(--warm-dk);border-radius:24px;padding:4rem 3.5rem;position:sticky;top:8rem;color:var(--cream)}
+.cta-card h3{font-family:var(--serif);font-size:2.5rem;font-weight:600;line-height:1.1;margin-bottom:1.5rem}
+.cta-card p{font-size:.95rem;color:rgba(250,248,244,.4);line-height:1.75;margin-bottom:2.5rem}
+.btn-cta{display:flex;align-items:center;justify-content:center;gap:.75rem;width:100%;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:1rem;font-weight:700;padding:1.125rem 2rem;border-radius:10px;text-decoration:none;transition:all .2s;cursor:pointer}
+.btn-cta:hover{background:#fff;transform:scale(1.01)}
+.cta-meta{margin-top:2.5rem;padding-top:2rem;border-top:1px solid rgba(250,248,244,.1);display:flex;flex-direction:column;gap:1rem}
+.cta-meta-item{display:flex;align-items:center;gap:.875rem;font-size:.7rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:rgba(250,248,244,.3)}
+.cta-meta-item svg{width:12px;height:12px;opacity:.5}
+
+footer{padding:3rem;display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--rule);font-size:.8rem;color:var(--ink-4);font-weight:500}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(25px)}to{opacity:1;transform:translateY(0)}}
+
+@media(max-width:1024px){
+  nav{padding:1.25rem 1.5rem}
+  #hero, section{padding-left:1.5rem;padding-right:1.5rem}
+  .hero-lower,.exp-head,#about{grid-template-columns:1fr;gap:3rem}
+  .exp-grid,.price-grid{grid-template-columns:1fr}
+  .how-grid{grid-template-columns:1fr 1fr}
+  .nav-links a:not(.nav-cta){display:none}
+  .hero-actions{align-items:flex-start}
+  .hero-footnote{text-align:left}
+  .stats-grid{grid-template-columns:1fr 1fr;gap:3rem}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#" class="logo">
+    <div class="logo-mark">
+      <svg viewBox="0 0 24 24" fill="none" stroke="rgba(250,248,244,0.9)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="10"/>
+        <polyline points="12 6 12 12 16 14"/>
+      </svg>
+    </div>
+    <div class="logo-text">
+      <span class="logo-name">Bearing Tutela</span>
+      <span class="logo-tag">Fractional Practices</span>
+    </div>
+  </a>
+  <div class="nav-links">
+    <a href="#expertise">Expertise</a>
+    <a href="#how">Method</a>
+    <a href="#pricing">Retainers</a>
+    <a href="javascript:void(0)" class="nav-cta btn-trigger-calendly">Book a Call &#8594;</a>
+  </div>
+</nav>
+
+<section id="hero">
+  <div class="hero-label-row">
+    <span class="hero-badge"><span class="badge-pip"></span>Strategic Systems Leadership</span>
+    <div class="avail-tag"><span class="avail-dot"></span>Currently accepting 1&#8211;2 clients</div>
+  </div>
+  <h1>Technology<br>leadership,<br><span class="soft">redefined.</span></h1>
+  <div class="hero-lower">
+    <p class="hero-sub">We provide high-altitude technical strategy and ground-level implementation for companies that have outgrown their original technology playbook.</p>
+    <div class="hero-actions">
+      <a href="javascript:void(0)" class="btn-primary btn-trigger-calendly">Schedule Discovery Call <svg viewBox="0 0 13 13" fill="none"><path d="M1.5 6.5h10M6.5 1.5l5 5-5 5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <div class="hero-footnote">Expert guidance &#183; From $8K / month<br>Fixed-fee outcomes</div>
+    </div>
+  </div>
+</section>
+
+<div class="ticker">
+  <div class="ticker-track">
+    <div class="ticker-item">
+      Systems Modernization<span class="ticker-dot"></span>Operational Efficiency<span class="ticker-dot"></span>Executive Reporting<span class="ticker-dot"></span>Digital Transformation<span class="ticker-dot"></span>Risk Mitigation<span class="ticker-dot"></span>Team Performance<span class="ticker-dot"></span>Alignment Strategy<span class="ticker-dot"></span>Vendor Management<span class="ticker-dot"></span>Scale Dynamics
+      <span class="ticker-dot"></span>Systems Modernization<span class="ticker-dot"></span>Operational Efficiency<span class="ticker-dot"></span>Executive Reporting<span class="ticker-dot"></span>Digital Transformation<span class="ticker-dot"></span>Risk Mitigation<span class="ticker-dot"></span>Team Performance<span class="ticker-dot"></span>Alignment Strategy<span class="ticker-dot"></span>Vendor Management<span class="ticker-dot"></span>Scale Dynamics
+    </div>
+  </div>
+</div>
+
+<div class="stats-bar"><div class="inner">
+  <div class="stats-grid">
+    <div class="stat-item"><span class="stat-val">20+</span><span class="stat-lab">Years Experience</span></div>
+    <div class="stat-item"><span class="stat-val">$50M+</span><span class="stat-lab">Budget Oversight</span></div>
+    <div class="stat-item"><span class="stat-val">48hr</span><span class="stat-lab">Response Time</span></div>
+    <div class="stat-item"><span class="stat-val">100%</span><span class="stat-lab">Delivery Rate</span></div>
+  </div>
+</div></div>
+
+<section id="expertise">
+  <div class="inner">
+    <div class="exp-head">
+      <div>
+        <div class="eyebrow">The Practice</div>
+        <h2>Domain Agnostic.<br>Pattern Specific.</h2>
+      </div>
+      <p class="exp-intro">Technical hurdles in growing businesses aren't unique to your vertical; they are unique to your stage. We focus on the universal patterns of high-performing technology operations.</p>
+    </div>
+    <div class="exp-grid">
+      <div class="exp-card">
+        <div class="exp-n">Scenario 01</div>
+        <h3 class="exp-title">Operational Friction</h3>
+        <p class="exp-desc">When legacy tools and manual workarounds begin to slow down your business. We audit your current systems to restore speed and reliability without disrupting daily operations.</p>
+      </div>
+      <div class="exp-card">
+        <div class="exp-n">Scenario 02</div>
+        <h3 class="exp-title">Team Scalability</h3>
+        <p class="exp-desc">Moving from a small office to a mid-cap firm requires a shift from manual tasks to automated systems. We build the processes and team structures that enable sustainable growth.</p>
+      </div>
+      <div class="exp-card">
+        <div class="exp-n">Scenario 03</div>
+        <h3 class="exp-title">The Strategic Gap</h3>
+        <p class="exp-desc">Whether you're missing a key leader or your current team is overextended, we provide steady, executive-level technology leadership while you find the right long-term fit.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="how">
+  <div class="inner">
+    <div class="eyebrow">Our Method</div>
+    <h2>Operational. Not theoretical.</h2>
+    <div class="how-grid">
+      <div class="how-cell">
+        <div class="how-num">01</div>
+        <div class="how-title">Discovery</div>
+        <p class="how-desc">A direct 30-minute conversation about your business goals and operational bottlenecks. No jargon, just a discussion on where the friction lies.</p>
+      </div>
+      <div class="how-cell">
+        <div class="how-num">02</div>
+        <div class="how-title">The Scoped Plan</div>
+        <p class="how-desc">Within 48 hours, you receive a specific list of actions for the first 30 days. Real milestones with measurable business impact.</p>
+      </div>
+      <div class="how-cell">
+        <div class="how-num">03</div>
+        <div class="how-title">Active Integration</div>
+        <p class="how-desc">We work directly with your team and vendors. We treat your technology health with the same urgency as our own business.</p>
+      </div>
+      <div class="how-cell">
+        <div class="how-num">04</div>
+        <div class="how-title">Ongoing Calibration</div>
+        <p class="how-desc">Our focus evolves as your business does. We review monthly and adjust our engagement to fit your current operational needs.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="pricing">
+  <div class="inner">
+    <div class="eyebrow">Engagement Options</div>
+    <h2>Transparent Fees.<br>Predictable Value.</h2>
+    <div class="price-grid">
+      <div class="price-card">
+        <div class="p-tier">Advisory Focus</div>
+        <div class="p-name">Oversight</div>
+        <div class="p-num">Core Tutela</div>
+        <div class="p-freq">Monthly Retainer • Fixed Fee</div>
+        <ul class="p-list">
+          <li>Executive strategy sessions</li><li>Regular systems check-ins</li><li>Systems & vendor audit</li><li>Technology roadmap</li>
+        </ul>
+      </div>
+      <div class="price-card featured">
+        <div class="p-tier">Active Partnership</div>
+        <div class="p-name">Integration</div>
+        <div class="p-num">Partnership</div>
+        <div class="p-freq">Embedded Engagement • 2–3 Days/Week</div>
+        <ul class="p-list">
+          <li>Active team integration</li><li>Systems design & scaling</li><li>Executive narratives</li><li>Operational implementation</li><li>Technology hiring guidance</li>
+        </ul>
+      </div>
+      <div class="price-card">
+        <div class="p-tier">High Intensity</div>
+        <div class="p-name">Transition</div>
+        <div class="p-num">High Intensity</div>
+        <div class="p-freq">Interim Leadership • 4–5 Days/Week</div>
+        <ul class="p-list">
+          <li>Full executive presence</li><li>Strategic vendor liaison</li><li>Major digital transition</li><li>Time-boxed 3–6 months</li>
+        </ul>
+      </div>
+    </div>
+    <p style="text-align: center; margin-top: 3rem; color: var(--ink-3); font-size: 0.9rem;">
+      *Engagements are scoped to your specific operational needs. Monthly fees typically range from $8k to $25k.
+    </p>
+  </div>
+</section>
+
+<section id="about">
+  <div class="inner">
+    <div class="about-text">
+      <div class="eyebrow">About the Practice</div>
+      <h2>Strategic in vision. <br>Practical in application.</h2>
+      <p>Bearing Tutela is a fractional technology leadership practice built for companies that need senior expertise now—not in months when a long-term search finally concludes.</p>
+      <p>The "Bearing" in our name is literal. A bearing is both a <strong>direction</strong> and a <strong>support</strong>. Most firms offer one or the other: high-level advice that never touches the ground, or hands-on help that lacks a strategic north star. We square that tension by being integrated members of your leadership team.</p>
+      <p>The challenges that stall a business at the mid-cap stage are usually structural. We apply the operational patterns that separate high-growth firms from those that stall, giving you the clarity needed to scale.</p>
+    </div>
+    <div class="cta-card">
+      <h3>Ready to find your bearing?</h3>
+      <p>Tell us where your business operations are and where they need to go. We’ll tell you honestly if we're a fit.</p>
+      <a href="javascript:void(0)" class="btn-cta btn-trigger-calendly">Schedule Discovery Call</a>
+      <div class="cta-meta">
+        <div class="cta-meta-item"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor"><circle cx="6" cy="6" r="5"/><path d="M6 3v3h2"/></svg> 30-minute call, no prep required</div>
+        <div class="cta-meta-item"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor"><path d="M2 6h8M6 2l4 4-4 4"/></svg> Proposal within 48 hours</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="inner" style="display:flex; justify-content:space-between; width:100%;">
+    <span>Bearing Tutela &copy; 2026</span>
+    <span>Fractional Practices &bull; Systems & Technology Strategy</span>
+  </div>
+</footer>
+
+<!-- Calendly Library -->
+<script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async></script>
+<script type="text/javascript">
+  /**
+   * PRE-PUBLISH STEP:
+   * Replace the placeholder below with your actual Calendly link.
+   * Example: const CALENDLY_URL = "https://calendly.com/bearingtutela/30min";
+   */
+  const CALENDLY_URL = "https://calendly.com/bearingtutela/30min";
+
+  window.onload = function() {
+    const triggerButtons = document.querySelectorAll('.btn-trigger-calendly');
+    
+    triggerButtons.forEach(button => {
+      button.addEventListener('click', function(e) {
+        e.preventDefault();
+        
+        if (CALENDLY_URL.includes("YOUR_LINK_HERE")) {
+          console.warn("Calendly URL not set. Please update the CALENDLY_URL constant in the script.");
+          alert("Consultation booking is currently being calibrated. Please check back in a moment or reach out directly.");
+        } else {
+          Calendly.initPopupWidget({ url: CALENDLY_URL });
+        }
+        return false;
+      });
+    });
+  };
+</script>
+
+</body>
+</html>
