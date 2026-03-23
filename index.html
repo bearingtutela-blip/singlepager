@@ -130,7 +130,14 @@ h2{font-family:var(--serif);font-weight:600;font-size:clamp(2.25rem,4vw,3.5rem);
 .cta-meta-item{display:flex;align-items:center;gap:.875rem;font-size:.7rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:rgba(250,248,244,.3)}
 .cta-meta-item svg{width:12px;height:12px;opacity:.5}
 
-footer{padding:3rem;display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--rule);font-size:.8rem;color:var(--ink-4);font-weight:500}
+footer{padding:3rem;border-top:1px solid var(--rule);background:var(--bg)}
+.footer-inner{max-width:1280px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;font-size:.8rem;color:var(--ink-4);font-weight:500}
+
+/* Easter Egg Styles */
+.spotify-drawer{max-height:0;overflow:hidden;transition:max-height 0.5s ease-out;background:var(--bg-2);border-top:0 solid var(--rule)}
+.spotify-drawer.open{max-height:220px;border-top-width:1px;padding:2rem 3rem}
+.music-trigger{cursor:pointer;opacity:0.2;transition:opacity 0.2s;display:flex;align-items:center;gap:0.5rem}
+.music-trigger:hover{opacity:1;color:var(--ink)}
 
 @keyframes fadeUp{from{opacity:0;transform:translateY(25px)}to{opacity:1;transform:translateY(0)}}
 
@@ -144,6 +151,7 @@ footer{padding:3rem;display:flex;justify-content:space-between;align-items:cente
   .hero-actions{align-items:flex-start}
   .hero-footnote{text-align:left}
   .stats-grid{grid-template-columns:1fr 1fr;gap:3rem}
+  .footer-inner{flex-direction:column;gap:1.5rem;text-align:center}
 }
 </style>
 </head>
@@ -321,9 +329,20 @@ footer{padding:3rem;display:flex;justify-content:space-between;align-items:cente
   </div>
 </section>
 
+<div id="spotify-drawer" class="spotify-drawer">
+  <div class="inner">
+    <!-- REPLACE THE PLAYLIST ID BELOW (37i9dQZF1DWZeKCadmBdyA) WITH YOUR OWN -->
+    <iframe style="border-radius:12px" src="https://open.spotify.com/playlist/1wbRX27Umcmd1FyYr26GKC?si=LUVnJZfvQ2GPmJbEmjhxHg" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+  </div>
+</div>
+
 <footer>
-  <div class="inner" style="display:flex; justify-content:space-between; width:100%;">
+  <div class="footer-inner">
     <span>Bearing Tutela &copy; 2026</span>
+    <span class="music-trigger" id="music-trigger">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"></path><circle cx="6" cy="18" r="3"></circle><circle cx="18" cy="16" r="3"></circle></svg>
+      The Lab Tapes
+    </span>
     <span>Fractional Practices &bull; Systems & Technology Strategy</span>
   </div>
 </footer>
@@ -331,11 +350,6 @@ footer{padding:3rem;display:flex;justify-content:space-between;align-items:cente
 <!-- Calendly Library -->
 <script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async></script>
 <script type="text/javascript">
-  /**
-   * PRE-PUBLISH STEP:
-   * Replace the placeholder below with your actual Calendly link.
-   * Example: const CALENDLY_URL = "https://calendly.com/bearingtutela/30min";
-   */
   const CALENDLY_URL = "https://calendly.com/bearingtutela/30min";
 
   window.onload = function() {
@@ -344,15 +358,25 @@ footer{padding:3rem;display:flex;justify-content:space-between;align-items:cente
     triggerButtons.forEach(button => {
       button.addEventListener('click', function(e) {
         e.preventDefault();
-        
         if (CALENDLY_URL.includes("YOUR_LINK_HERE")) {
-          console.warn("Calendly URL not set. Please update the CALENDLY_URL constant in the script.");
-          alert("Consultation booking is currently being calibrated. Please check back in a moment or reach out directly.");
+          alert("Consultation booking is coming soon.");
         } else {
           Calendly.initPopupWidget({ url: CALENDLY_URL });
         }
         return false;
       });
+    });
+
+    // Easter Egg Logic
+    const musicTrigger = document.getElementById('music-trigger');
+    const drawer = document.getElementById('spotify-drawer');
+    
+    musicTrigger.addEventListener('click', function() {
+      drawer.classList.toggle('open');
+      if (drawer.classList.contains('open')) {
+        // Soft scroll to ensure the player is visible
+        window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+      }
     });
   };
 </script>
